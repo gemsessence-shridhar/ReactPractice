@@ -13,15 +13,15 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${inter.className}`}>
-        <header>
+        {/* <header>
           <Link href="/login" >Login</Link>
-        </header>
+        </header> */}
 
         {children}
 
-        <footer>
+        {/* <footer>
           Copyright &copy; TODO
-        </footer>
+        </footer> */}
       </body>
     </html>
   );
