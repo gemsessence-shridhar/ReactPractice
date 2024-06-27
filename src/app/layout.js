@@ -1,6 +1,11 @@
-import Link from "next/link";
 import { Inter } from "next/font/google";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+import { config } from "@fortawesome/fontawesome-svg-core";
+
 import "../styles/global.css";
+
+config.autoAddCss = false;
+
 
 const inter = Inter({ subsets: ["latin"] });
 
