@@ -1,11 +1,11 @@
-import { useReducer } from 'react';
+import { useContext } from 'react';
 import { Popconfirm } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencil, faTrash, faEye } from '@fortawesome/free-solid-svg-icons';
-import booksReducer from "@/reducers/library";
+import { LibraryContext } from '@/contexts/LibraryContext';
 
 const BookCard = ({ book }) => {
-  const [_state, dispatch] = useReducer(booksReducer);
+  const { dispatch } = useContext(LibraryContext);
 
   const confirm = (e) => {
     console.log(e);
