@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from 'react';
+import { useReducer } from 'react';
 import BookForm from '@/components/my-library/BookForm';
 import BookCard from '@/components/my-library/BookCard';
 import BookModal from '@/components/my-library/BookModal';
+import booksReducer from '@/reducers/library';
 
 const initialBooksInTheSelf = [
   {
@@ -118,26 +119,20 @@ const initialBooksInTheSelf = [
   }
 ]
 
+const initialStates = {
+  books: initialBooksInTheSelf,
+  currentBook: {},
+  isModalOpen: false,
+  isEditingBook: false,
+}
+
 const Library = () => {
-  const [books, setBooks] = useState(initialBooksInTheSelf);
-  const [currentBook, setCurrentBook] = useState();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isEditingBook, setIsEditingBook] = useState(false);
-
-  const handleDeleteBook = (bookId) => {
-    const filteredBooks = books.filter((book) => book.id !== bookId)
-    setBooks(filteredBooks);
-  }
-
-  const handleEditBook = (book) => {
-    setCurrentBook(book);
-    setIsEditingBook(true);
-  }
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setCurrentBook(undefined);
-  }
+  const [{
+    books,
+    currentBook,
+    isModalOpen,
+    isEditingBook
+  }, dispatch] = useReducer(booksReducer, initialStates);
 
   return (
     <>
@@ -147,13 +142,7 @@ const Library = () => {
             <h1 className="text-2xl text-slate-50 font-bold">Add Book</h1>
           </div>
 
-          <BookForm
-            books={books}
-            setBooks={setBooks}
-            isEditingBook={isEditingBook}
-            currentBook={currentBook}
-            setIsEditingBook={setIsEditingBook}
-          />
+          <BookForm/>
         </div>
 
         <div className="basis-full lg:basis-3/5 flex flex-col mt-8 lg:mt-0 items-center max-h-full">
@@ -162,16 +151,7 @@ const Library = () => {
           </div>
 
           <div className='flex flex-col gap-4 py-8 lg:px-20 w-full max-h-[95%] overflow-auto'>
-            {books.length > 0 && books.map(book => 
-              <BookCard
-                key={book.id}
-                book={book}
-                setIsModalOpen={setIsModalOpen}
-                setCurrentBook={setCurrentBook}
-                handleEditBook={handleEditBook}
-                handleDeleteBook={handleDeleteBook}
-              />
-            )}
+            {books.length > 0 && books.map(book => <BookCard key={book.id} book={book} />)}
           </div>
         </div>
       </div>
@@ -179,7 +159,11 @@ const Library = () => {
       {
         currentBook &&
         !isEditingBook &&
-        <BookModal book={currentBook} isModalOpen={isModalOpen} handleCloseModal={handleCloseModal} />
+        <BookModal
+          book={currentBook}
+          isModalOpen={isModalOpen}
+          handleCloseModal={() => dispatch({ type: "closedModal" })}
+        />
       }
     </>
   )

@@ -1,36 +1,18 @@
-import { findIndex } from "lodash";
+import booksReducer from "@/reducers/library";
+import { useReducer } from "react";
 
-const BookForm = ({ books, setBooks, isEditingBook, currentBook, setIsEditingBook }) => {
+const BookForm = () => {
+  const [{ currentBook, isEditingBook }, dispatch] = useReducer(booksReducer);
+
   const getDefaultValue = (fieldName) => {
     if (!isEditingBook) { return "" }
     return currentBook[fieldName];
   }
 
-  const initializeBookInformation = () => {
-    return {
-      id: books.length + 1
-    }
-  }
-
   const handleFormSubmit = (event) => {
     event.preventDefault();
-
-    const bookObj = isEditingBook ? {...currentBook} : initializeBookInformation()
     const formData = new FormData(event.target);    
-    formData.forEach((value, key) => {
-      bookObj[key] = value;
-    })
-
-    if (isEditingBook) {
-      const booksCopy = [...books];
-      var index = findIndex(booksCopy, { id: currentBook.id });
-      booksCopy.splice(index, 1, bookObj);
-      setBooks(booksCopy);
-      setIsEditingBook(false);
-    } else {
-      setBooks([...books, bookObj])
-    }
-
+    dispatch({ type: isEditingBook ? "updated" : "added", formData });
     event.target.reset();
   }
 

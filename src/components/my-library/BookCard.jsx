@@ -1,16 +1,15 @@
+import { useReducer } from 'react';
 import { Popconfirm } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencil, faTrash, faEye } from '@fortawesome/free-solid-svg-icons';
+import booksReducer from "@/reducers/library";
 
-const BookCard = ({ book, setIsModalOpen, setCurrentBook, handleEditBook, handleDeleteBook }) => {
-  const handleViewClick = () => {
-    setCurrentBook(book);
-    setIsModalOpen(true)
-  }
+const BookCard = ({ book }) => {
+  const [_state, dispatch] = useReducer(booksReducer);
 
   const confirm = (e) => {
     console.log(e);
-    handleDeleteBook(book.id)
+    dispatch({ type: 'deleted', bookId: book.id })
   };
 
   return (
@@ -26,11 +25,11 @@ const BookCard = ({ book, setIsModalOpen, setCurrentBook, handleEditBook, handle
       </div>
 
       <div className='flex items-start md:items-center gap-4'>
-        <button onClick={handleViewClick}>
+        <button onClick={() => dispatch({ type: 'selectedToView', book })}>
           <FontAwesomeIcon icon={faEye} />
         </button>
 
-        <button onClick={() => handleEditBook(book)}>
+        <button onClick={() => dispatch({ type: 'selectedToEdit', book })}>
           <FontAwesomeIcon icon={faPencil} className='text-cyan-700' />
         </button>
 
