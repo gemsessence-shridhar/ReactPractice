@@ -1,8 +1,11 @@
-import { useContext } from "react";
-import { LibraryContext } from '@/contexts/LibraryContext';
+"use client"
+
+import { useSelector, useDispatch } from "react-redux";
+import { addBook, updateBook } from "@/features/library/bookSlice";
 
 const BookForm = () => {
-  const { dispatch, currentBook, isEditingBook } = useContext(LibraryContext);
+  const dispatch = useDispatch();
+  const { currentBook, isEditingBook } = useSelector(state => state.library)
 
   const getDefaultValue = (fieldName) => {
     if (!isEditingBook) { return "" }
@@ -11,8 +14,8 @@ const BookForm = () => {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    const formData = new FormData(event.target);    
-    dispatch({ type: isEditingBook ? "updated" : "added", formData });
+    const formData = new FormData(event.target);
+    isEditingBook ? dispatch(updateBook({ formData })) : dispatch(addBook({ formData }));
     event.target.reset();
   }
 

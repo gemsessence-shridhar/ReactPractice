@@ -1,9 +1,12 @@
-import { useContext } from 'react';
+"use client"
+
+import { useDispatch, useSelector } from 'react-redux';
+import { closeModal } from '@/features/library/bookSlice';
 import { Modal } from 'antd';
-import { LibraryContext } from '@/contexts/LibraryContext';
 
 const BookModal = () => {
-  const { currentBook, isEditingBook, isModalOpen, dispatch } = useContext(LibraryContext);
+  const dispatch = useDispatch();
+  const { currentBook, isEditingBook, isModalOpen } = useSelector(state => state.library)
 
   if (!currentBook || isEditingBook)
     return null;
@@ -12,7 +15,7 @@ const BookModal = () => {
     <Modal
       title={`#${currentBook.id} - ${currentBook.title}`}
       open={isModalOpen}
-      onCancel={() => dispatch({ type: "closedModal" })}
+      onCancel={() => dispatch(closeModal())}
       footer={[]}
     >
       <p>Title: {currentBook.title}</p>

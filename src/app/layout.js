@@ -2,6 +2,8 @@ import { Inter } from "next/font/google";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 
+import store from "@/store";
+import { Provider } from "react-redux";
 import "../styles/global.css";
 
 config.autoAddCss = false;
@@ -18,15 +20,16 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${inter.className}`}>
-        {/* <header>
-          <Link href="/login" >Login</Link>
-        </header> */}
+        <Provider store={store}>
+          {/* <header>
+            <Link href="/login" >Login</Link>
+          </header> */}
+          {children}
+          {/* <footer>
+            Copyright &copy; TODO
+          </footer> */}
+        </Provider>
 
-        {children}
-
-        {/* <footer>
-          Copyright &copy; TODO
-        </footer> */}
       </body>
     </html>
   );

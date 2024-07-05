@@ -1,9 +1,10 @@
-import { useContext } from 'react';
-import { LibraryContext } from '@/contexts/LibraryContext';
+"use client"
+
+import { useSelector } from 'react-redux';
 import BookCard from './BookCard';
 
 const Books = () => {
-  const { books } = useContext(LibraryContext);
+  const { books } = useSelector(state => state.library);
 
   return (
     <div className="basis-full lg:basis-3/5 flex flex-col mt-8 lg:mt-0 items-center max-h-full">

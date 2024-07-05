@@ -1,15 +1,16 @@
-import { useContext } from 'react';
+"use client"
+
+import { useDispatch } from 'react-redux';
+import { deleteBook, selectToView, selectToEdit } from '@/features/library/bookSlice';
 import { Popconfirm } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencil, faTrash, faEye } from '@fortawesome/free-solid-svg-icons';
-import { LibraryContext } from '@/contexts/LibraryContext';
 
 const BookCard = ({ book }) => {
-  const { dispatch } = useContext(LibraryContext);
+  const dispatch = useDispatch();
 
-  const confirm = (e) => {
-    console.log(e);
-    dispatch({ type: 'deleted', bookId: book.id })
+  const confirm = () => {
+    dispatch(deleteBook({ bookId: book.id }))
   };
 
   return (
@@ -25,11 +26,11 @@ const BookCard = ({ book }) => {
       </div>
 
       <div className='flex items-start md:items-center gap-4'>
-        <button onClick={() => dispatch({ type: 'selectedToView', book })}>
+        <button onClick={() => dispatch(selectToView({ book }))}>
           <FontAwesomeIcon icon={faEye} />
         </button>
 
-        <button onClick={() => dispatch({ type: 'selectedToEdit', book })}>
+        <button onClick={() => dispatch(selectToEdit({ book }))}>
           <FontAwesomeIcon icon={faPencil} className='text-cyan-700' />
         </button>
 
