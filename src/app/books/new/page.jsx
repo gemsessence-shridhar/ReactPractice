@@ -1,9 +1,9 @@
 "use client"
 
-import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
 import { addBook, updateBook } from "@/features/library/bookSlice";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const BookForm = () => {
   const dispatch = useDispatch();
