@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
+import App from "./App";
 import LibraryApp from "@/LibraryApp";
 import "../styles/global.css";
 
@@ -19,15 +20,10 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${inter.className}`}>
         <LibraryApp>
-          {/* <header>
-            <Link href="/login" >Login</Link>
-          </header> */}
-          {children}
-          {/* <footer>
-            Copyright &copy; TODO
-          </footer> */}
+          <App>
+            {children}
+          </App>
         </LibraryApp>
-
       </body>
     </html>
   );
