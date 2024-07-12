@@ -8,11 +8,17 @@ export const authorSlice = createSlice({
     authors: [],    
   },
   reducers: {
-    addAuhors: (state, action) => {
+    addAuthors: (state, action) => {
       state.authors = action.payload.authors;
+    },
+    addAuthor: (state, action) => {
+      state.authors = [...state.authors, action.payload.author]
+    },
+    deleteAuthor: (state, action) => {
+      state.authors = state.authors.filter(author => author.id !== action.payload.authorId)
     }
   }
 });
 
-export const { addAuhors } = authorSlice.actions;
+export const { addAuthors, addAuthor, deleteAuthor } = authorSlice.actions;
 export default authorSlice.reducer;
